@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-ext {
+/*ext {
     bintrayRepo = 'maven'
     bintrayName = 'sectionedrecyclerview'
 
@@ -22,15 +22,15 @@ ext {
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
-}
+}*/
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 24
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 22
+        targetSdkVersion 24
         versionCode 3
         versionName "1.2"
     }
@@ -43,8 +43,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
 }
 
+/*
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'*/

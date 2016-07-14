@@ -16,6 +16,7 @@
 package com.truizlop.sectionedrecyclerview;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.ViewGroup;
 
 /**
@@ -37,8 +38,10 @@ public abstract class SectionedRecyclerViewAdapter<H extends RecyclerView.ViewHo
 
     private int[] sectionForPosition = null;
     private int[] positionWithinSection = null;
-    private boolean[] isHeader = null;
-    private boolean[] isFooter = null;
+    private SparseBooleanArray isHeader = null;
+    private SparseBooleanArray isFooter = null;
+    /*private boolean[] isHeader = null;
+    private boolean[] isFooter = null;*/
     private int count = 0;
 
     public SectionedRecyclerViewAdapter() {
@@ -100,13 +103,15 @@ public abstract class SectionedRecyclerViewAdapter<H extends RecyclerView.ViewHo
     private void allocateAuxiliaryArrays(int count) {
         sectionForPosition = new int[count];
         positionWithinSection = new int[count];
-        isHeader = new boolean[count];
-        isFooter = new boolean[count];
+        isHeader = new SparseBooleanArray(getSectionCount());
+        isFooter = new SparseBooleanArray(getSectionCount());
     }
 
     private void setPrecomputedItem(int index, boolean isHeader, boolean isFooter, int section, int position) {
-        this.isHeader[index] = isHeader;
-        this.isFooter[index] = isFooter;
+        if (isHeader)
+            this.isHeader.put(index, isHeader);
+        if (isFooter)
+            this.isFooter.put(index, isFooter);
         sectionForPosition[index] = section;
         positionWithinSection[index] = position;
     }
@@ -180,7 +185,7 @@ public abstract class SectionedRecyclerViewAdapter<H extends RecyclerView.ViewHo
         if(isHeader == null){
             setupIndices();
         }
-        return isHeader[position];
+        return isHeader.get(position);
     }
 
     /**
@@ -190,7 +195,7 @@ public abstract class SectionedRecyclerViewAdapter<H extends RecyclerView.ViewHo
         if(isFooter == null){
             setupIndices();
         }
-        return isFooter[position];
+        return isFooter.get(position);
     }
 
     protected boolean isSectionHeaderViewType(int viewType){
@@ -199,6 +204,22 @@ public abstract class SectionedRecyclerViewAdapter<H extends RecyclerView.ViewHo
 
     protected boolean isSectionFooterViewType(int viewType){
         return viewType == TYPE_SECTION_FOOTER;
+    }
+
+    public int getSectionForPosition(int position) {
+        if(sectionForPosition == null){
+            setupIndices();
+        }
+
+        return sectionForPosition[position];
+    }
+
+    public int getItemSectionPositionForPosition(int position) {
+        if(sectionForPosition == null){
+            setupIndices();
+        }
+
+        return positionWithinSection[position];
     }
 
     /**
